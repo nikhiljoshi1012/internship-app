@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\Student;
 use App\Models\Attendance;
 
@@ -18,6 +19,11 @@ class StudentController extends Controller
     public function show($id)
     {
         $student = Student::find($id);
+        if (!$student) {
+            $student = new Student();
+            $student->email = Auth::user()->email;
+            $student->save();
+        }
         $attendances = Attendance::where('student_id', $id)->get();
         return view('student-attendance', compact('student', 'attendances'));
     }
@@ -33,7 +39,11 @@ class StudentController extends Controller
 
     public function viewMyAttendance()
     {
-        $student = Student::where('email', Auth::user()->email)->firstOrFail();
+        $student = Student::where('email', Auth::user()->email)->first();
+        if (!$student) {
+            Log::error('Student record not found for user: ' . Auth::user()->email);
+            abort(404);
+        }
         $attendances = Attendance::where('student_id', $student->id)
             ->orderBy('date', 'desc')
             ->get();

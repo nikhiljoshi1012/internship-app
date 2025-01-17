@@ -23,8 +23,7 @@ Route::post('/verify-pin', [LoginController::class, 'verifyPin']);
 
 
 Route::middleware(['auth', 'student'])->group(function () {
-    Route::get('/my-attendance', [StudentController::class, 'viewMyAttendance'])
-        ->name('student.attendance');
+    Route::get('/my-attendance', [StudentController::class, 'viewMyAttendance'])->name('student.attendance');
 });
 Route::prefix('professor')->name('professor.')->group(function () {
     Route::get('/dashboard', [ProfessorController::class, 'index'])->name('dashboard');
