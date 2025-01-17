@@ -60,7 +60,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <form action="{{ route('student.destroy', $student->id) }}" method="post">
+                                              <form action="{{ route('professor.destroy', ['id' => $student->id]) }}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -71,6 +71,7 @@
                             </tbody>
                         </table>
 
+                        
                         <a href="{{ route('professor.create') }}" class="btn btn-primary">Create Student</a>
                         <a href="{{ route('professor.attendance', ['division' => 'A']) }}" class="btn btn-success">Mark Attendance for Division A</a>
                         <a href="{{ route('professor.attendance', ['division' => 'B']) }}" class="btn btn-success">Mark Attendance for Division B</a>

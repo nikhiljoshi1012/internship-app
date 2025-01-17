@@ -68,6 +68,7 @@ class ProfessorController extends Controller
             'rollno' => 'required|string|max:255|unique:students',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
         $photoPath = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
 
         Student::create([
@@ -76,13 +77,14 @@ class ProfessorController extends Controller
             'rollno' => $request->rollno,
             'photo' => $photoPath,
         ]);
-        return redirect()->route('professor');
+
+        return redirect()->route('professor.dashboard')->with('success', 'Student created successfully');
     }
 
     public function destroy($id)
     {
         Student::find($id)->delete();
-        return redirect()->route('professor');
+        return redirect()->route('professor.dashboard')->with('success', 'Student deleted successfully');
     }
 
     public function monthlyAttendance($month)

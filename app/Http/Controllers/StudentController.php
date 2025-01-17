@@ -21,4 +21,13 @@ class StudentController extends Controller
         $attendances = Attendance::where('student_id', $id)->get();
         return view('student-attendance', compact('student', 'attendances'));
     }
+
+    public function destroy($id)
+    {
+        $student = Student::find($id);
+        if ($student) {
+            $student->delete();
+        }
+        return redirect()->route('student.index');
+    }
 }

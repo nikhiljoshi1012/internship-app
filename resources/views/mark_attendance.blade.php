@@ -131,7 +131,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit Attendance</button>
-                            <a href="{{ route('professor') }}" class="btn btn-secondary">Back to Dashboard</a>
+                                                        <a href="{{ route('professor.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
                         </form>
                     </div>
                 </div>
