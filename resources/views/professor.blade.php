@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professor</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -36,7 +37,7 @@
 
                     <div class="card-body">
                         <h2>Students</h2>
-                        <table class="table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -60,7 +61,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                              <form action="{{ route('professor.destroy', ['id' => $student->id]) }}" method="post">
+                                            <form action="{{ route('professor.destroy', ['id' => $student->id]) }}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -71,7 +72,6 @@
                             </tbody>
                         </table>
 
-                        
                         <a href="{{ route('professor.create') }}" class="btn btn-primary">Create Student</a>
                         <a href="{{ route('professor.attendance', ['division' => 'A']) }}" class="btn btn-success">Mark Attendance for Division A</a>
                         <a href="{{ route('professor.attendance', ['division' => 'B']) }}" class="btn btn-success">Mark Attendance for Division B</a>
@@ -81,6 +81,14 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        });
+    </script>
 </body>
 
 </html>

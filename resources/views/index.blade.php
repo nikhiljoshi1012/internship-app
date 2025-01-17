@@ -75,9 +75,22 @@
                         </div>
                     </div>
                 </div>
+            @elseif(Auth::user()->role === 'student')
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar-check fa-3x mb-3 text-primary"></i>
+                                <h4>View My Attendance</h4>
+                                <p>Check your attendance records</p>
+                                <a href="{{ route('student.attendance') }}" class="btn btn-primary">View Attendance</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @else
                 <div class="alert alert-danger text-center">
-                    Access denied. This dashboard is for professors only.
+                    Access denied. This dashboard is for professors and students only.
                 </div>
             @endif
         @else

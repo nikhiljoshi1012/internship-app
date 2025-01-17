@@ -66,7 +66,8 @@ class ProfessorController extends Controller
             'name' => 'required|string|max:255',
             'division' => 'required|string|max:255',
             'rollno' => 'required|string|max:255|unique:students',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'required|email|unique:students',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', //edit size if needed
         ]);
 
         $photoPath = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
@@ -75,6 +76,7 @@ class ProfessorController extends Controller
             'name' => $request->name,
             'division' => $request->division,
             'rollno' => $request->rollno,
+            'email' => $request->email,
             'photo' => $photoPath,
         ]);
 

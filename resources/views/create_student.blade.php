@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Student</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <style>
         .navbar-custom {
             background-color: #2c3e50;
@@ -79,6 +80,10 @@
                                     <option value="B" {{ old('division') == 'B' ? 'selected' : '' }}>B</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
 
                             <div class="form-group mb-3">
                                 <label for="rollno">Roll Number</label>
@@ -89,7 +94,7 @@
                                 <label for="photo">Upload Photo</label>
                                 <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
                             </div>
-
+                          
                             <div class="d-flex justify-content-between">
                                 <button type="submit" class="btn btn-primary">Create Student</button>                                
                                 <a href="{{ route('professor.dashboard') }}" class="btn btn-secondary btn-sm">Back to Dashboard</a>
@@ -103,5 +108,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        });
+    </script>
 </body>
 </html>

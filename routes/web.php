@@ -21,14 +21,17 @@ Route::post('/verify-pin', [LoginController::class, 'verifyPin']);
 
 // Protected routes
 
-Route::middleware(['auth'])->group(function () {
-    Route::prefix('professor')->name('professor.')->group(function () {
-        Route::get('/dashboard', [ProfessorController::class, 'index'])->name('dashboard');
-        Route::get('/create-student', [ProfessorController::class, 'create'])->name('create');
-        Route::post('/store-student', [ProfessorController::class, 'store'])->name('store');
-        Route::delete('/student/{id}', [ProfessorController::class, 'destroy'])->name('destroy');
-        Route::match(['get', 'post'], '/attendance/{division}', [ProfessorController::class, 'handleAttendance'])->name('attendance');
-        Route::get('/monthly-attendance/{month}', [ProfessorController::class, 'monthlyAttendance'])->name('monthlyAttendance');
-        Route::get('/overall-attendance', [ProfessorController::class, 'overallAttendance'])->name('overallAttendance');
-    });
+
+Route::middleware(['auth', 'student'])->group(function () {
+    Route::get('/my-attendance', [StudentController::class, 'viewMyAttendance'])
+        ->name('student.attendance');
+});
+Route::prefix('professor')->name('professor.')->group(function () {
+    Route::get('/dashboard', [ProfessorController::class, 'index'])->name('dashboard');
+    Route::get('/create-student', [ProfessorController::class, 'create'])->name('create');
+    Route::post('/store-student', [ProfessorController::class, 'store'])->name('store');
+    Route::delete('/student/{id}', [ProfessorController::class, 'destroy'])->name('destroy');
+    Route::match(['get', 'post'], '/attendance/{division}', [ProfessorController::class, 'handleAttendance'])->name('attendance');
+    Route::get('/monthly-attendance/{month}', [ProfessorController::class, 'monthlyAttendance'])->name('monthlyAttendance');
+    Route::get('/overall-attendance', [ProfessorController::class, 'overallAttendance'])->name('overallAttendance');
 });

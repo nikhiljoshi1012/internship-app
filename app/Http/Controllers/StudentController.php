@@ -30,4 +30,14 @@ class StudentController extends Controller
         }
         return redirect()->route('student.index');
     }
+
+    public function viewMyAttendance()
+    {
+        $student = Student::where('email', Auth::user()->email)->firstOrFail();
+        $attendances = Attendance::where('student_id', $student->id)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return view('student_attendance', compact('attendances'));
+    }
 }

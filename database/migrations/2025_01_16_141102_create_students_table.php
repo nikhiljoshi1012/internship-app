@@ -12,12 +12,14 @@ class CreateStudentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('division');
+            $table->string('email')->unique()->after('name');
             $table->timestamps();
         });
     }
-
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropColumn('email');
+        });
     }
 }

@@ -7,7 +7,13 @@ use App\Models\Attendance;
 
 class Student extends Model
 {
-    protected $fillable = ['name', 'division', 'photo', 'rollno'];
+    protected $fillable = [
+        'name',
+        'email',
+        'division',
+        'rollno',
+        'photo'
+    ];
 
     public function attendance()
     {
