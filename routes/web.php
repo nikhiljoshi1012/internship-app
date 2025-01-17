@@ -30,8 +30,11 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::get('/my-attendance', [StudentController::class, 'viewMyAttendance'])->name('student.attendance');
 });
 Route::prefix('professor')->name('professor.')->group(function () {
+    Route::get('/manage-students', [ProfessorController::class, 'manageStudents'])->name('manage-students');
     Route::get('/dashboard', [ProfessorController::class, 'index'])->name('dashboard');
     Route::get('/create-student', [ProfessorController::class, 'create'])->name('create');
+
+    Route::get('/professor/overall-attendance', [ProfessorController::class, 'showOverallAttendance'])->name('professor.overallAttendance');
     Route::post('/store-student', [ProfessorController::class, 'store'])->name('store');
     Route::delete('/student/{id}', [ProfessorController::class, 'destroy'])->name('destroy');
     Route::match(['get', 'post'], '/attendance/{division}', [ProfessorController::class, 'handleAttendance'])->name('attendance');

@@ -6,41 +6,169 @@
     <title>Mark Attendance - Division {{ $division }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #90caf9);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar-custom {
+            background-color: #1976d2;
+            padding: 15px 10px;
+        }
+
+        .navbar-custom .navbar-brand {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .navbar-custom .navbar-brand:hover {
+            color: #bbdefb;
+        }
+
+        .logout-btn {
+            background-color: #d32f2f;
+            border: none;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Card Styles */
+        .card {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .card-header {
+            background-color: #bbdefb;
+            border-bottom: 1px solid #e3f2fd;
+            padding: 20px;
+        }
+
+        .card-header h4 {
+            margin: 0;
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        /* Table Styles */
+        .table {
+            margin-top: 15px;
+            background-color: white;
+        }
+
+        .table th {
+            background-color: #1976d2;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Form and Input Styles */
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 0.2rem rgba(25, 118, 210, 0.25);
+        }
+
+        .custom-control-label::before,
+        .custom-control-label::after {
+            top: 0.1rem;
+            height: 1rem;
+            width: 1rem;
+        }
+
         .custom-control-input:checked ~ .custom-control-label::before {
             background-color: #28a745;
             border-color: #28a745;
         }
+
+        /* Attendance Summary Styles */
         .attendance-summary {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+            background-color: #f0f4c3;
+            color: #558b2f;
+            border: 1px solid #dcedc8;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .table td { vertical-align: middle; }
-        .card-header { background-color: #f8f9fa; }
-        .card-header h4 { margin-bottom: 0; color: #333; }
+
+        .attendance-summary h5 {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #1976d2;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1565c0;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Date Toggle Switch */
+        .custom-control-label {
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            background-color: #1976d2;
+            border-color: #1976d2;
+        }
     </style>
 </head>
 <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    <i class="fas fa-home"></i> Home
-                </a>
-                <div class="ms-auto d-flex align-items-center">
-                    <span class="text-white me-3">
-                        Welcome, {{ Auth::user()->name }}
-                    </span>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-sm logout-btn text-white">
-                            Sign Out
-                        </button>
-                    </form>
-                </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <i class="fas fa-home"></i> Professor Dashboard
+            </a>
+            <div class="ml-auto d-flex align-items-center">
+                <span class="text-white mr-3">
+                    Welcome, <strong>{{ Auth::user()->name }}</strong>
+                </span>
+                <form action="{{ route('logout') }}" method="POST" class="mb-0">
+                    @csrf
+                    <button type="submit" class="btn logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
             </div>
-        </nav>
+        </div>
+    </nav>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -131,7 +259,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit Attendance</button>
-                                                        <a href="{{ route('professor.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                            <a href="{{ route('professor.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
                         </form>
                     </div>
                 </div>

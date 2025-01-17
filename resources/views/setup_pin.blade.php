@@ -6,33 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Setup PIN</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #283048, #859398);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card-header {
+            background-color: #283048;
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 15px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: none;
+        }
+
+        .form-control:focus {
+            border-color: #859398;
+            box-shadow: 0 0 6px rgba(133, 147, 152, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #283048;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            padding: 10px 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #1f2b3a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('setup.pin', ['user' => $userId]) }}">
-                            @csrf
-                            <div class="form-group row">
-                                <label for="pin" class="col-md-4 col-form-label text-md-right">{{ __('Setup PIN') }}</label>
-                                <div class="col-md-6">
-                                    <input id="pin" type="text" class="form-control @error('pin') is-invalid @enderror" name="pin" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Submit') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-key"></i> Setup PIN
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ route('setup.pin', ['user' => $userId]) }}">
+                @csrf
+                <div class="form-group mb-3">
+                    <label for="pin" class="form-label">{{ __('Setup PIN') }}</label>
+                    <input id="pin" type="text" class="form-control @error('pin') is-invalid @enderror" name="pin"
+                        required>
+                    @error('pin')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-            </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">
+                        {{ __('Submit') }}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </body>

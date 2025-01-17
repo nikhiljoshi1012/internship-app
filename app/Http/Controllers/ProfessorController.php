@@ -8,6 +8,7 @@ use App\Models\Attendance;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MonthlyAttendanceReport;
+use Carbon\Carbon;
 
 class ProfessorController extends Controller
 {
@@ -102,24 +103,12 @@ class ProfessorController extends Controller
 
     public function overallAttendance()
     {
-        $divisions = Student::select('division')->distinct()->get();
-        $attendanceData = [];
+        $month = Carbon::now()->format('F');
+        $students = Student::with(['attendance' => function ($query) {
+            $query->whereMonth('date', Carbon::now()->month);
+        }])->get();
 
-        foreach ($divisions as $division) {
-            $students = Student::where('division', $division->division)->get();
-            $totalPresent = Attendance::whereIn('student_id', $students->pluck('id'))
-                ->where('is_present', 1)
-                ->count();
-            $totalRecords = Attendance::whereIn('student_id', $students->pluck('id'))->count();
-
-            $attendanceData[$division->division] = [
-                'percentage' => $totalRecords > 0 ?
-                    round(($totalPresent / $totalRecords) * 100, 2) : 0,
-                'total_students' => $students->count()
-            ];
-        }
-
-        return view('overall_attendance', compact('attendanceData'));
+        return view('monthly_attendance', compact('students', 'month'));
     }
 
     public function sendMonthlyReport($studentId, $month)
@@ -135,5 +124,12 @@ class ProfessorController extends Controller
         ));
 
         return back()->with('success', 'Attendance report sent successfully to ' . $student->email);
+    }
+    public function manageStudents()
+    {
+        $students = Student::orderBy('division')
+            ->orderBy('rollno')
+            ->get();
+        return view('manage_students', compact('students'));
     }
 }
