@@ -10,13 +10,11 @@ class LoginController extends Controller
 {
     public function index()
     {
-        if (Auth::guard('professor')->check()) {
+        if (Auth::check()) {
             return $this->redirectBasedOnRole();
         }
         return view('login');
     }
-
-
 
     public function login(Request $request)
     {
@@ -33,7 +31,7 @@ class LoginController extends Controller
 
         $credentials = $request->only(['email', 'password']);
 
-        if (Auth::guard('professor')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return $this->redirectBasedOnRole();
         }
@@ -45,7 +43,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('professor')->logout();
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login');
@@ -53,7 +51,7 @@ class LoginController extends Controller
 
     private function redirectBasedOnRole()
     {
-        $user = Auth::guard('professor')->user();
+        $user = Auth::user();
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }

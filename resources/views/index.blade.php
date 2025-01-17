@@ -59,10 +59,11 @@
     </nav>
 
     <!-- Main Content -->
-    @if(auth()->check())
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">Professor Dashboard</h2>
-            @if(auth()->user()->role === 'professor')
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Welcome to Attendance Management System</h2>
+        
+        @auth
+            @if(Auth::user()->role === 'professor')
                 <div class="row justify-content-center">
                     <div class="col-md-4">
                         <div class="card h-100">
@@ -79,23 +80,23 @@
                     Access denied. This dashboard is for professors only.
                 </div>
             @endif
-        </div>
-    @else
-        <div class="welcome-section">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-8">
-                        <h1 class="display-4 mb-4">Welcome to Attendance Management System</h1>
-                        <p class="lead mb-4">Streamline your attendance tracking process with our easy-to-use platform.</p>
-                        <div class="mt-4">
-                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg me-3">Login</a>
-                            <a href="{{ route('signup') }}" class="btn btn-success btn-lg">Sign Up</a>
+        @else
+            <div class="welcome-section">
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-8">
+                            <h1 class="display-4 mb-4">Welcome to Attendance Management System</h1>
+                            <p class="lead mb-4">Streamline your attendance tracking process with our easy-to-use platform.</p>
+                            <div class="mt-4">
+                                <a href="{{ route('login') }}" class="btn btn-primary btn-lg me-3">Login</a>
+                                <a href="{{ route('signup') }}" class="btn btn-success btn-lg">Sign Up</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
+        @endauth
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
