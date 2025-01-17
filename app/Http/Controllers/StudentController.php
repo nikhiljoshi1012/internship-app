@@ -41,7 +41,6 @@ class StudentController extends Controller
     {
         $student = Student::where('email', Auth::user()->email)->first();
         if (!$student) {
-            Log::error('Student record not found for user: ' . Auth::user()->email);
             abort(404);
         }
         $attendances = Attendance::where('student_id', $student->id)

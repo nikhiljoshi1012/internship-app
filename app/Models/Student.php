@@ -15,8 +15,9 @@ class Student extends Model
         'photo'
     ];
 
+    // In Student.php model
     public function attendance()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Attendance::class)->latest();
     }
 }

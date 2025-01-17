@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Carbon\Carbon;
 
 class MonthlyAttendanceReport extends Mailable
 {
@@ -23,7 +24,15 @@ class MonthlyAttendanceReport extends Mailable
 
     public function build()
     {
+        // Force database query to get fresh data
+        $freshAttendanceData = $this->student->attendance()->whereMonth('date', Carbon::parse($this->month)->month)->get();
+
         return $this->view('emails.monthly-attendance')
+            ->with([
+                'student' => $this->student,
+                'month' => $this->month,
+                'attendanceData' => $freshAttendanceData
+            ])
             ->subject('Monthly Attendance Report - ' . date('F Y', strtotime($this->month)));
     }
 }

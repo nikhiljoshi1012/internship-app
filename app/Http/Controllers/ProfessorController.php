@@ -113,10 +113,14 @@ class ProfessorController extends Controller
 
     public function sendMonthlyReport($studentId, $month)
     {
+        // Get fresh data from database
         $student = Student::with(['attendance' => function ($query) use ($month) {
-            $query->whereMonth('date', $month);
+            $query->whereMonth('date', Carbon::parse($month)->month)
+                ->whereYear('date', Carbon::parse($month)->year)
+                ->latest(); // Orders by most recent first
         }])->findOrFail($studentId);
 
+        // Pass fresh data to the mail
         Mail::to($student->email)->send(new MonthlyAttendanceReport(
             $student,
             $month,

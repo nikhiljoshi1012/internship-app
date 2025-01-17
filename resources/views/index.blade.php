@@ -129,37 +129,37 @@
         <h2 class="text-center mb-4">Welcome to Attendance Management System</h2>
 
         @auth
-            @if(Auth::user()->role === 'professor')
-                <div class="row justify-content-center">
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-clipboard-check fa-3x mb-3 text-primary"></i>
-                                <h4>Mark Attendance</h4>
-                                <p>Quick and easy attendance marking for your classes</p>
-                                <a href="{{ route('professor.dashboard') }}" class="btn btn-primary">View Dashboard</a>
+                        @if(Auth::user()->role === 'professor')
+                            <div class="row justify-content-center">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-clipboard-check fa-3x mb-3 text-primary"></i>
+                                            <h4>Mark Attendance</h4>
+                                            <p>Quick and easy attendance marking for your classes</p>
+                                            <a href="{{ route('professor.dashboard') }}" class="btn btn-primary">View Dashboard</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            @elseif(Auth::user()->role === 'student')
-                <div class="row justify-content-center">
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-calendar-check fa-3x mb-3 text-primary"></i>
-                                <h4>View My Attendance</h4>
-                                <p>Check your attendance records</p>
-                                <a href="{{ route('student.attendance') }}" class="btn btn-primary">View Attendance</a>
+                        @elseif(Auth::user()->role === 'student')
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-4 mb-4">
+                                                    <div class="card h-100">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-calendar-check fa-3x mb-3 text-primary"></i>
+                                                            <h4>View My Attendance</h4>
+                                                            <p>Check your attendance records</p>
+                            <a href="{{ route('student.attendance') }}" class="btn btn-primary">View Attendance</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                        @else
+                            <div class="alert alert-danger text-center">
+                                Access denied. This dashboard is for professors and students only.
                             </div>
-                        </div>
-                    </div>
-                </div>
-            @else
-                <div class="alert alert-danger text-center">
-                    Access denied. This dashboard is for professors and students only.
-                </div>
-            @endif
+                        @endif
         @else
             <div class="welcome-section">
                 <div class="container">

@@ -26,9 +26,12 @@ Route::post(
 // Protected routes
 
 
-Route::middleware(['auth', 'student'])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    // Make sure this path matches your URL exactly
     Route::get('/my-attendance', [StudentController::class, 'viewMyAttendance'])->name('student.attendance');
 });
+
+
 Route::prefix('professor')->name('professor.')->group(function () {
     Route::get('/manage-students', [ProfessorController::class, 'manageStudents'])->name('manage-students');
     Route::get('/dashboard', [ProfessorController::class, 'index'])->name('dashboard');
