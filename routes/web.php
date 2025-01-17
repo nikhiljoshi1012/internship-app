@@ -18,7 +18,11 @@ Route::get('/setup-pin/{user}', [SignupController::class, 'showPinSetupForm'])->
 Route::post('/setup-pin/{user}', [SignupController::class, 'setupPin']);
 Route::get('/verify-pin', [LoginController::class, 'showPinVerificationForm'])->name('verify.pin');
 Route::post('/verify-pin', [LoginController::class, 'verifyPin']);
-
+Route::post(
+    '/professor/send-monthly-report/{student}/{month}',
+    [ProfessorController::class, 'sendMonthlyReport']
+)
+    ->name('professor.sendMonthlyReport');
 // Protected routes
 
 

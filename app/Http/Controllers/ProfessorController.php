@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MonthlyAttendanceReport;
 
 class ProfessorController extends Controller
 {
@@ -118,5 +120,20 @@ class ProfessorController extends Controller
         }
 
         return view('overall_attendance', compact('attendanceData'));
+    }
+
+    public function sendMonthlyReport($studentId, $month)
+    {
+        $student = Student::with(['attendance' => function ($query) use ($month) {
+            $query->whereMonth('date', $month);
+        }])->findOrFail($studentId);
+
+        Mail::to($student->email)->send(new MonthlyAttendanceReport(
+            $student,
+            $month,
+            $student->attendance
+        ));
+
+        return back()->with('success', 'Attendance report sent successfully to ' . $student->email);
     }
 }

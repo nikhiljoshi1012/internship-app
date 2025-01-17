@@ -35,12 +35,23 @@
                     <div class="card-header">Monthly Attendance for {{ $month }}</div>
 
                     <div class="card-body">
-                        @foreach($students as $student)
-                            <h3>{{ $student->name }}</h3>
-                            <p>Division: {{ $student->division }}</p>
-                            <p>Present: {{ $student->attendance->where('is_present', 1)->count() }} days</p>
-                            <p>Absent: {{ $student->attendance->where('is_present', 0)->count() }} days</p>
-                        @endforeach
+@foreach($students as $student)
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>{{ $student->name }}</h3>
+            <p>Division: {{ $student->division }}</p>
+            <p>Present: {{ $student->attendance->where('is_present', 1)->count() }} days</p>
+            <p>Absent: {{ $student->attendance->where('is_present', 0)->count() }} days</p>
+            <form action="{{ route('professor.sendMonthlyReport', ['student' => $student->id, 'month' => $month]) }}"
+                method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Send Report via Email
+                </button>
+            </form>
+        </div>
+    </div>
+@endforeach
                     </div>
                 </div>
             </div>
